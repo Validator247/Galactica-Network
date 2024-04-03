@@ -1,5 +1,15 @@
 # Galactica-Network
 
+Website: https://galactica.com/
+
+Twitter: https://twitter.com/GalacticaNet
+
+Discord: https://discord.com/invite/galactica
+
+Faucet: https://faucet-reticulum.galactica.com/
+
+# Manual Installation
+
 Step 1: Install Dependencies
 
 Ensure your system is up to date and install necessary dependencies:
@@ -194,3 +204,12 @@ Unjail validator
         galacticad tx slashing unjail --from wallet--chain-id galactica_9301-1 --gas-prices 10agnet -y
 
                 
+# Remove node
+
+        cd $HOME
+        sudo systemctl stop galacticad
+        sudo systemctl disable galacticad
+        rm -rf /etc/systemd/system/galacticad.service
+        rm -rf .galactica
+        rm -rf galactica
+        rm -rf $(which galacticad)
