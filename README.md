@@ -96,27 +96,91 @@ Step 10: Create Systemd Service
 
 Create a systemd service file for managing the Galactica node:
 
-    galacticad tx staking create-validator \
-    --amount 1000000000000000000agnet \
-    --from wallet \
-    --commission-rate 0.1 \
-    --commission-max-rate 0.2 \
-    --commission-max-change-rate 0.01 \
-    --min-self-delegation 1 \
-    --pubkey $(galacticad tendermint show-validator) \
-    --moniker “Your-nodename” \
-    --identity “keybase \
-    --details “love you forever” \
-    --website “yoủ-web” \
-    --security-contact “your-mail” \
-    --chain-id galactica_9301-1 \
-    --gas-prices 10agnet \
-    --gas 300000 \
-    --yes
+        sudo tee /etc/systemd/system/galacticad.service > /dev/null <<EOF
+        [Unit]
+        Description=Galactica node
+        After=network-online.target
+        [Service]
+        User=$USER
+        WorkingDirectory=$HOME/.galactica
+        ExecStart=$(which galacticad) start --home $HOME/.galactica --chain-id galactica_9301-1
+        Restart=on-failure
+        RestartSec=5
+        LimitNOFILE=65535
+        [Install]
+        WantedBy=multi-user.target
+        EOF
 
+Step 11: Reset and Download Snapshot
 
+Reset the Tendermint state and download a snapshot if available:
 
+        galacticad tendermint unsafe-reset-all --home $HOME/.galactica
+        if curl -s --head curl https://testnet-files.itrocket.net/galactica/snap_galactica.tar.lz4 | head -n 1 | grep "200" > /dev/null; then
+        curl https://testnet-files.itrocket.net/galactica/snap_galactica.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.galactica
+        else
+        echo no have snap
+        fi
 
+Step 12: Enable and Start the Service
 
+Enable and start the Galactica systemd service:
 
+        sudo systemctl daemon-reload
+        sudo systemctl enable galacticad
+        sudo systemctl restart galacticad && sudo journalctl -u galacticad -f
 
+Check sync status
+
+        galacticad status 2>&1 | jq .SyncInfo.catching_up
+
+# Wallet
+
+Add New Wallet Key
+
+        galacticad keys add wallet
+
+Recover existing key
+
+        galacticad keys add wallet --recover
+
+Get Wallet Hex
+
+        galacticad keys convert-bech32-to-hex $(galacticad keys show wallet -a)
+
+check Balance
+
+        galacticad q bank balances $(galacticad keys show wallet -a)
+
+# Create Validator
+
+        galacticad tx staking create-validator \
+        --amount 1000000000000000000agnet \
+        --from wallet \
+        --commission-rate 0.1 \
+        --commission-max-rate 0.2 \
+        --commission-max-change-rate 0.01 \
+        --min-self-delegation 1 \
+        --pubkey $(galacticad tendermint show-validator) \
+        --moniker “Your-nodename” \
+        --identity “keybase \
+        --details “love you forever” \
+        --website “yoủ-web” \
+        --security-contact “your-mail” \
+        --chain-id galactica_9301-1 \
+        --gas-prices 10agnet \
+        --gas 300000 \
+        --yes
+
+Edit Existing Validator
+
+        galacticad tx staking edit-validator \
+        --commission-rate 0.1 \
+        --new-moniker "new-moniker" \
+        --identity "new-kepase" \
+        --details "To The Moon" \
+        --from wallet \
+        --chain-id galactica_9301-1 \
+        --gas-prices 10agnet \
+        --gas 300000 \
+        -y        
