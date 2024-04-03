@@ -175,7 +175,7 @@ check Balance
         --moniker “Your-nodename” \
         --identity “keybase \
         --details “love you forever” \
-        --website “yoủ-web” \
+        --website “your-web” \
         --security-contact “your-mail” \
         --chain-id galactica_9301-1 \
         --gas-prices 10agnet \
