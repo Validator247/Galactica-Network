@@ -8,6 +8,12 @@ Discord: https://discord.com/invite/galactica
 
 Faucet: https://faucet-reticulum.galactica.com/
 
+API: https://galactica-testnet-api.validator247.com
+
+RPC: https://galactica-testnet-rpc.validator247.com
+
+EXPLORER: https://explorer.validator247.com/galactica-testnet/staking
+
 # Manual Installation
 
 Step 1: Install Dependencies
