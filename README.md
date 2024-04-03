@@ -184,3 +184,13 @@ Edit Existing Validator
         --gas-prices 10agnet \
         --gas 300000 \
         -y        
+
+Delegate Token to your own validator
+
+        galacticad tx staking delegate $(galacticad keys show wallet --bech val -a) 1000000000000000000agnet --from wallet --chain-id galactica_9301-1 --gas-prices 10agnet -y
+
+Unjail validator
+
+        galacticad tx slashing unjail --from wallet--chain-id galactica_9301-1 --gas-prices 10agnet -y
+
+                
