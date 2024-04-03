@@ -67,8 +67,8 @@ Step 6: Download Genesis and Addrbook
 
 Download genesis and addrbook files and place them in the appropriate directory:
 
-    wget -O $HOME/.galactica/config/genesis.json https://testnet-files.itrocket.net/galactica/genesis.json
-    wget -O $HOME/.galactica/config/addrbook.json https://testnet-files.itrocket.net/galactica/addrbook.json
+    wget -O addrbook.json https://raw.githubusercontent.com/Validator247/Galactica-Network/main/addrbook.json
+    wget -O genesis.json https://raw.githubusercontent.com/Validator247/Galactica-Network/main/genesis.json
 
 Step 7: Set Seeds and Peers
 
