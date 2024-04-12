@@ -219,3 +219,9 @@ Unjail validator
         rm -rf .galactica
         rm -rf galactica
         rm -rf $(which galacticad)
+
+# Vote
+
+        galacticad tx gov vote 1 yes --from=wallet --gas-prices=10agnet --chain-id=galactica_9302-1 -y
+
+        
